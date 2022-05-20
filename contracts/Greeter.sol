@@ -50,4 +50,9 @@ contract MyFarm{
         myPets.push(newPet);
     }
 
+    function eat(uint _index) external payable {
+        myPets[_index].hungry = 100;
+        
+    }
+
 }
