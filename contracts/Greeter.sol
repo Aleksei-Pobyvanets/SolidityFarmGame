@@ -52,9 +52,9 @@ contract MyFarm{
 
     function eat(uint _index) external payable {
         MyPet storage cMyPets = myPets[_index];
-        uint cPriceForEat = 1 ether;
-        require(100 >= cMyPets.hungry, "Already eaten!");
-        require(msg.value < cPriceForEat, "Not enougt funds!");
+        uint cPriceForEat = 2;
+        require(cMyPets.hungry < 100, "Already eaten!");
+        require(msg.value == cPriceForEat, "Not enougt funds!");
         cMyPets.hungry = 100;
     }
 
