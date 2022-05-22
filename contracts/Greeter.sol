@@ -12,6 +12,8 @@ contract MyFarm{
         uint level;
         uint hungry;
         uint profit;
+        uint levelApp;
+        uint mined;
     }
 
     MyPet[] public myPets;
@@ -40,7 +42,7 @@ contract MyFarm{
 
     function createPrt(string memory _name, uint _Enimaltype) external payable onlyOwner{
 
-        uint cPriceForEat = 2;
+        uint cPriceForEat = 200000;
         require(msg.value == cPriceForEat, "Not enougt funds!");
 
 
@@ -49,7 +51,9 @@ contract MyFarm{
             Enimaltype: _Enimaltype,
             level: randMod10(),
             hungry: randMod100(),
-            profit: randMod100()
+            profit: randMod100(),
+            levelApp: 0,
+            mined: 0
         });
         emit addPet(_name, _Enimaltype, randMod10(), randMod100(), randMod100());
 
@@ -58,7 +62,7 @@ contract MyFarm{
 
     function eat(uint _index) external payable {
         MyPet storage cMyPets = myPets[_index];
-        uint cPriceForEat = 2;
+        uint cPriceForEat = 2000;
         require(cMyPets.hungry < 100, "Already eaten!");
         require(msg.value == cPriceForEat, "Not enougt funds!");
         cMyPets.hungry = 100;
@@ -69,10 +73,16 @@ contract MyFarm{
         MyPet storage cMyPets = myPets[_index];
         require(cMyPets.hungry >= 25, "Need to be fed!");
         cMyPets.hungry = cMyPets.hungry - 25;
+        cMyPets.levelApp = cMyPets.levelApp + 1;
+        if(cMyPets.levelApp == 5){
+            cMyPets.level = cMyPets.level + 1;
+            cMyPets.levelApp = 0;
+        }
+
+        cMyPets.mined = cMyPets.mined + randMod10();
 
         emit Work("Worked");
     }
-
 
 
 }
