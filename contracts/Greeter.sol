@@ -16,7 +16,9 @@ contract MyFarm{
 
     MyPet[] public myPets;
 
-    // event addPet(string name, uint Enimaltype, uint level, uint hungry, uint profit);
+    event addPet(string name, uint Enimaltype, uint level, uint hungry, uint profit);
+    event Eat(string);
+    event Work(string);
 
     constructor() {
         owner = msg.sender;
@@ -45,7 +47,7 @@ contract MyFarm{
             hungry: randMod100(),
             profit: randMod100()
         });
-        // emit addPet(_name, _Enimaltype, randMod10(), randMod100(), randMod100());
+        emit addPet(_name, _Enimaltype, randMod10(), randMod100(), randMod100());
 
         myPets.push(newPet);
     }
@@ -56,6 +58,15 @@ contract MyFarm{
         require(cMyPets.hungry < 100, "Already eaten!");
         require(msg.value == cPriceForEat, "Not enougt funds!");
         cMyPets.hungry = 100;
+
+        emit Eat("Eaten");
+    }
+    function create(uint _index) external {
+        MyPet storage cMyPets = myPets[_index];
+        require(cMyPets.hungry >= 25, "Need to be fed!");
+        cMyPets.hungry = cMyPets.hungry - 25;
+
+        emit Work("Worked");
     }
 
 }
