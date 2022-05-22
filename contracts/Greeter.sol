@@ -38,7 +38,11 @@ contract MyFarm{
         return uint(keccak256(abi.encodePacked(msg.sender,randNonce))) % 100;
     }
 
-    function createPrt(string memory _name, uint _Enimaltype) external onlyOwner{
+    function createPrt(string memory _name, uint _Enimaltype) external payable onlyOwner{
+
+        uint cPriceForEat = 2;
+        require(msg.value == cPriceForEat, "Not enougt funds!");
+
 
         MyPet memory newPet = MyPet({
             name: _name,
@@ -68,5 +72,7 @@ contract MyFarm{
 
         emit Work("Worked");
     }
+
+
 
 }
