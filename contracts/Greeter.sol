@@ -74,7 +74,7 @@ contract MyFarm{
         require(cMyPets.hungry >= 25, "Need to be fed!");
         cMyPets.hungry = cMyPets.hungry - 25;
         cMyPets.levelApp = cMyPets.levelApp + 1;
-        if(cMyPets.levelApp == 5){
+        if(cMyPets.levelApp >= 5){
             cMyPets.level = cMyPets.level + 1;
             cMyPets.levelApp = 0;
         }
@@ -84,5 +84,8 @@ contract MyFarm{
         emit Work("Worked");
     }
 
+    function balance() external view returns(uint){
+        return address(this).balance;
+    }
 
 }
