@@ -88,4 +88,12 @@ contract MyFarm{
         return address(this).balance;
     }
 
+    function withdraw(address _addr, uint _index) external {
+        MyPet storage cMyPets = myPets[_index];
+        require(cMyPets.mined > 0, "Not enough funds!");
+        uint ammount = cMyPets.mined;
+        payable(_addr).transfer(ammount);
+        cMyPets.mined = 0;
+    }
+    // 0x976EA74026E726554dB657fA54763abd0C3a0aa9
 }
